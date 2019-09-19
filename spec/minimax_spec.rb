@@ -7,15 +7,9 @@ class Minimax
         winning_position = sorted_possible_moves[-1][:position]
         return winning_position if check_level_for_win?(sorted_possible_moves)
 
-        #while check_level_for_win?(sorted_possible_moves) == false
-        #     sorted_possible_moves.each do |move|
-
-        #     end
-        # end
-
         # If not, look for wins in children
         possible_moves.each do |move|
-            children = get_children(move) #children is an array
+            children = get_children(move) #children is an array of further {p,c,s} objects
             unless children.empty?
                 highest_scoring_child = get_highest_scoring_child(children)
                 move[:score] += highest_scoring_child[:score]
@@ -30,14 +24,8 @@ class Minimax
         possible_moves.each do |move|
             children = get_children(move)
             unless children.empty? 
-                # puts "CHILDREN"
-                # puts children
-                puts "MOVE"
-                puts move
                 grandchildren = get_children(move)[0][:children] #where we dig down a level
                 unless grandchildren.empty?
-                    # puts "GRANDCHILDREN"
-                    # puts get_children(move)[0][:children]
                     highest_scoring_grandchild = get_highest_scoring_child(grandchildren)
                     move[:score] += highest_scoring_grandchild[:score]
                 end
